@@ -6,33 +6,38 @@
 char* postfixArray;
 char* stack;
 
+int postfixArrayPosition = 0;
+
+void push (int position, char element){
+  postfixArray[position] = element;
+  postfixArrayPosition++;
+}
+
 char* convert_to_postfix(char* infixArray)
 {
   int size = sizeof(infixArray)/sizeof(infixArray[0]);
   postfixArray = malloc(size);
   stack = malloc(size);
 
-  int array = 0;
-  int position = 0;
+  int infixArrayPosition = 0;
   int stackPosition = 0;
-  while (infixArray[position] != '\0')
+
+  while (infixArray[infixArrayPosition] != '\0')
   {
-    if (isalnum(infixArray[position])) 
+    if (isalnum(infixArray[infixArrayPosition])) 
     {
-      postfixArray[array] = infixArray[position];
-      array++;  
+      push(postfixArrayPosition, infixArray[infixArrayPosition]);
     } else {
-      stack[stackPosition] = infixArray[position];
+      stack[stackPosition] = infixArray[infixArrayPosition];
       stackPosition++;
     }
-    position++;
+    infixArrayPosition++;
   
   }
 
   while( stackPosition > 0)
   {
-    postfixArray[array] = stack[stackPosition -1];
-    array++;
+    push(postfixArrayPosition, stack[stackPosition -1]);
     stackPosition--;
   } 
   
