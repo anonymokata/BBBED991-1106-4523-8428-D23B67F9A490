@@ -4,22 +4,18 @@
 #include "../src/infix_to_postfix.h"
 #include "infix_to_postfix_test.h"
 
-START_TEST (a_plus_b_should_return_a_b_plus)
-{
-  char* postfix = convert_to_infix("a+b");
+static char* postfix_to_infix[2][2] = {
+  {"a+b", "ab+"},
+  {"a-b", "ab-"},
+};
 
-  ck_assert_str_eq(postfix, "ab+");
+START_TEST (convert_infix_to_postfix_loop)
+{
+  char* postfix = convert_to_infix(postfix_to_infix[_i][0]);
+
+  ck_assert_str_eq(postfix, postfix_to_infix[_i][1]);
 }
 END_TEST
-
-START_TEST (a_minus_b_should_return_a_b_minus)
-{
-  char* postfix = convert_to_infix("a-b");
-
-  ck_assert_str_eq(postfix, "ab-");
-}
-END_TEST
-
 
 Suite *infix_to_postfix_suite(void)
 {
@@ -30,8 +26,7 @@ Suite *infix_to_postfix_suite(void)
 
   tc_convert_to_postfix = tcase_create("Convert to postfix");
 
-  tcase_add_test(tc_convert_to_postfix, a_plus_b_should_return_a_b_plus);
-  tcase_add_test(tc_convert_to_postfix, a_minus_b_should_return_a_b_minus);
+  tcase_add_loop_test(tc_convert_to_postfix, convert_infix_to_postfix_loop, 0, 3);
 
   suite_add_tcase(s, tc_convert_to_postfix);
 
