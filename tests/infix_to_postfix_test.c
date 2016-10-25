@@ -4,14 +4,15 @@
 #include "../src/infix_to_postfix.h"
 #include "infix_to_postfix_test.h"
 
-static char* postfix_to_infix[2][2] = {
+static char* postfix_to_infix[3][3] = {
   {"a+b", "ab+"},
   {"a-b", "ab-"},
+  {"a*b", "ab*"}
 };
 
 START_TEST (convert_infix_to_postfix_loop)
 {
-  char* postfix = convert_to_infix(postfix_to_infix[_i][0]);
+  char* postfix = convert_to_postfix(postfix_to_infix[_i][0]);
 
   ck_assert_str_eq(postfix, postfix_to_infix[_i][1]);
 }
