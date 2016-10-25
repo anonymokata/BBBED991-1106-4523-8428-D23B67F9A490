@@ -12,6 +12,14 @@ START_TEST (a_plus_b_should_return_a_b_plus)
 }
 END_TEST
 
+START_TEST (a_minus_b_should_return_a_b_minus)
+{
+  char* postfix = convert_to_infix("a-b");
+
+  ck_assert_str_eq(postfix, "ab-");
+}
+END_TEST
+
 
 Suite *infix_to_postfix_suite(void)
 {
@@ -23,6 +31,7 @@ Suite *infix_to_postfix_suite(void)
   tc_convert_to_postfix = tcase_create("Convert to postfix");
 
   tcase_add_test(tc_convert_to_postfix, a_plus_b_should_return_a_b_plus);
+  tcase_add_test(tc_convert_to_postfix, a_minus_b_should_return_a_b_minus);
 
   suite_add_tcase(s, tc_convert_to_postfix);
 

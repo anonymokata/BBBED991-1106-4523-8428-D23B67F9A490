@@ -1,2 +1,3 @@
 reverse-polish-notation
-*.h
+*.o
+*.swp
