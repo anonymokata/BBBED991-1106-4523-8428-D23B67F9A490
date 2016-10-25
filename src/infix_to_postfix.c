@@ -14,7 +14,7 @@ char* convert_to_postfix(char* infixArray)
 
   int array = 0;
   int position = 0;
-
+  int stackPosition = 0;
   while (infixArray[position] != '\0')
   {
     if (isalnum(infixArray[position])) 
@@ -22,13 +22,19 @@ char* convert_to_postfix(char* infixArray)
       postfixArray[array] = infixArray[position];
       array++;  
     } else {
-      stack[0] = infixArray[position];
+      stack[stackPosition] = infixArray[position];
+      stackPosition++;
     }
     position++;
   
   }
 
-  postfixArray[array] = stack[0];
+  while( stackPosition > 0)
+  {
+    postfixArray[array] = stack[stackPosition -1];
+    array++;
+    stackPosition--;
+  } 
   
   return postfixArray;
 }
