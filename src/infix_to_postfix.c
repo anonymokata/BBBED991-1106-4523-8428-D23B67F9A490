@@ -8,6 +8,17 @@ char* stack;
 
 int postfixArrayPosition = 0;
 
+int getPresidence(char element) {
+  switch(element)
+  {
+    case '+': return 1;
+    case '-': return 1;
+    case '*': return 2;
+    case '/': return 2;
+  }
+
+}
+
 void push (int position, char element){
   postfixArray[position] = element;
   postfixArrayPosition++;
@@ -28,6 +39,16 @@ char* convert_to_postfix(char* infixArray)
     {
       push(postfixArrayPosition, infixArray[infixArrayPosition]);
     } else {
+      if (getPresidence(infixArray[infixArrayPosition]) < getPresidence(stack[stackPosition -1])){
+//dump stack on postfix  array
+        while( stackPosition > 0)
+        {
+          push(postfixArrayPosition, stack[stackPosition -1]);
+          stackPosition--;
+        } 
+
+      }
+//THEN add to operand stack as normal
       stack[stackPosition] = infixArray[infixArrayPosition];
       stackPosition++;
     }
