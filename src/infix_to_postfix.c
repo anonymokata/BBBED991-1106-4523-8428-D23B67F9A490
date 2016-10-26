@@ -42,9 +42,28 @@ char* convert_to_postfix(char* infixArray)
   stack = malloc(200);
 
   int infixArrayPosition = 0;
-
+  
   while (infixArray[infixArrayPosition] != '\0')
   {
+    if (infixArray[infixArrayPosition] == '(')
+    {
+      stack[stackPosition] = infixArray[infixArrayPosition];
+      stackPosition++;
+      infixArrayPosition++;
+      continue;
+    }
+
+    if (infixArray[infixArrayPosition] == ')')
+    {
+      infixArrayPosition++;
+      while(stack[stackPosition-1] != '(')
+      {
+        push(postfixArrayPosition, stack[stackPosition-1]);
+        stackPosition--;
+      }
+        stackPosition--;
+      continue;
+    }
     if (isalnum(infixArray[infixArrayPosition])) 
     {
       push(postfixArrayPosition, infixArray[infixArrayPosition]);
