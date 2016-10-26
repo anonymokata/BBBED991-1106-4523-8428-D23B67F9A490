@@ -16,6 +16,7 @@ int getPresidence(char element) {
     case '-': return 1;
     case '*': return 2;
     case '/': return 2;
+    case '^': return 3;
   }
   return 0;
 }

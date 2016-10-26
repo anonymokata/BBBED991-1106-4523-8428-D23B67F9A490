@@ -4,7 +4,7 @@
 #include "../src/infix_to_postfix.h"
 #include "infix_to_postfix_test.h"
 
-static char* postfix_to_infix[8][8] = {
+static char* postfix_to_infix[9][9] = {
   {"a+b", "ab+"},
   {"a-b", "ab-"},
   {"a*b", "ab*"},
@@ -12,7 +12,8 @@ static char* postfix_to_infix[8][8] = {
   {"a^b", "ab^"},
   {"a+b-c", "abc-+"},
   {"a*b+c", "ab*c+"},
-  {"a*b+c/d", "ab*cd/+"}
+  {"a*b+c/d", "ab*cd/+"},
+  {"a^b+c", "ab^c+"}
 };
 
 START_TEST (convert_infix_to_postfix_loop)
@@ -32,7 +33,7 @@ Suite *infix_to_postfix_suite(void)
 
   tc_convert_to_postfix = tcase_create("Convert to postfix");
 
-  tcase_add_loop_test(tc_convert_to_postfix, convert_infix_to_postfix_loop, 0, 8);
+  tcase_add_loop_test(tc_convert_to_postfix, convert_infix_to_postfix_loop, 0, 9);
 
   suite_add_tcase(s, tc_convert_to_postfix);
 
