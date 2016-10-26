@@ -17,7 +17,7 @@ int getPresidence(char element) {
     case '*': return 2;
     case '/': return 2;
   }
-
+  return 0;
 }
 
 void push (int position, char element){
@@ -36,9 +36,9 @@ void dumpStack()
 
 char* convert_to_postfix(char* infixArray)
 {
-  int size = sizeof(infixArray)/sizeof(infixArray[0]);
-  postfixArray = malloc(size);
-  stack = malloc(size);
+
+  postfixArray = malloc(200);
+  stack = malloc(200);
 
   int infixArrayPosition = 0;
 
@@ -58,6 +58,6 @@ char* convert_to_postfix(char* infixArray)
   
   }
 
- dumpStack(); 
+  dumpStack(); 
   return postfixArray;
 }
