@@ -8,8 +8,10 @@ char* stack;
 
 int postfixArrayPosition = 0;
 int stackPosition = 0;
+int infixArrayPosition = 0;
 
-int getPresidence(char element) {
+int get_presidence(char element) 
+{
   switch(element)
   {
     case '+': return 1;
@@ -21,12 +23,13 @@ int getPresidence(char element) {
   return 0;
 }
 
-void push (int position, char element){
+void push(int position, char element)
+{
   postfixArray[position] = element;
   postfixArrayPosition++;
 }
 
-void dumpStack()
+void dump_stack()
 {
   while( stackPosition > 0)
   {
@@ -35,20 +38,36 @@ void dumpStack()
   } 
 }
 
+void push_stack(char element)
+{
+  stack[stackPosition] = element;
+  stackPosition++;
+}
+
+void build_postfix(char element)
+{
+  if (isalnum(element))
+  {
+    push(postfixArrayPosition, element);
+  } else 
+  {
+    if (get_presidence(element) < get_presidence(stack[stackPosition -1])){
+      dump_stack();
+    }
+    push_stack(element);
+   }
+}
+
 char* convert_to_postfix(char* infixArray)
 {
-
   postfixArray = malloc(200);
   stack = malloc(200);
-
-  int infixArrayPosition = 0;
   
   while (infixArray[infixArrayPosition] != '\0')
   {
     if (infixArray[infixArrayPosition] == '(')
     {
-      stack[stackPosition] = infixArray[infixArrayPosition];
-      stackPosition++;
+      push_stack(infixArray[infixArrayPosition]);
       infixArrayPosition++;
       continue;
     }
@@ -64,20 +83,10 @@ char* convert_to_postfix(char* infixArray)
         stackPosition--;
       continue;
     }
-    if (isalnum(infixArray[infixArrayPosition])) 
-    {
-      push(postfixArrayPosition, infixArray[infixArrayPosition]);
-    } else {
-      if (getPresidence(infixArray[infixArrayPosition]) < getPresidence(stack[stackPosition -1])){
-        dumpStack();
-      }
-      stack[stackPosition] = infixArray[infixArrayPosition];
-      stackPosition++;
-    }
+    build_postfix(infixArray[infixArrayPosition]);
     infixArrayPosition++;
-  
   }
 
-  dumpStack(); 
+  dump_stack(); 
   return postfixArray;
 }
