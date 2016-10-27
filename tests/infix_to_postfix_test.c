@@ -42,19 +42,3 @@ Suite *infix_to_postfix_suite(void)
 
   return s;
 }
-
-int main (void)
-{
-  int number_failed;
-  Suite *infix_to_postfix;
-  SRunner *sr;
-
-  infix_to_postfix = infix_to_postfix_suite();
-
-  sr = srunner_create(infix_to_postfix);
-
-  srunner_run_all(sr, CK_NORMAL);
-  srunner_free(sr);
-
-  return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
-}
