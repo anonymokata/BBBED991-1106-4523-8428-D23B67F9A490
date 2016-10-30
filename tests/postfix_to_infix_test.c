@@ -5,10 +5,10 @@
 #include "postfix_to_infix_test.h"
 
 
-static char* postfix_to_infix[1][2] = {
-//  {"ab+", "a+b"},
-//  {"ab-", "a-b"},
-//  {"ab*", "a*b"},
+static char* postfix_to_infix[4][2] = {
+  {"ab+", "a+b"},
+  {"ab-", "a-b"},
+  {"ab*", "a*b"},
   {"abc-+", "a+b-c"}
 };
 
@@ -29,7 +29,7 @@ Suite *postfix_to_infix_suite(void)
 
   tc_convert_to_infix = tcase_create("Convert to infix");
 
-  tcase_add_loop_test(tc_convert_to_infix, convert_postfix_to_infix, 0, 1);
+  tcase_add_loop_test(tc_convert_to_infix, convert_postfix_to_infix, 0, 4);
 
   suite_add_tcase(s, tc_convert_to_infix);
 

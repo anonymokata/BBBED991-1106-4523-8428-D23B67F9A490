@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 int stackIndex = 0;
-char* array;
-int location;
+static char* array;
+static int location;
 struct node
 {
   char element;
@@ -51,22 +52,29 @@ void get_first_node(node *link)
   }
   else
   {
-   first_most_node = link;
+    first_most_node = link;
   }
+}
+static int status = 0;
+static int locate = 0;
+char* recurseList(node* chain)
+{
+  if (chain->next)
+  {
+    array[locate] = chain->element;
+    locate++;
+    recurseList(chain->next);
+  }else {
+    array[locate] = chain->element;
+  }
+  return array;
 }
 
 char* getString(node* chain)
 {
-  array = malloc(200);
-
-  array[0] = chain->element;
-  array[1] = chain->next->element;
-  array[2] = chain->next->next->element;
-  array[3] = chain->next->next->next->element;
-  node *c_node = chain->next->next->next->next;
-  array[4] = c_node->element;
-  printf("this is array[4] %c\n", array[4]);
-  return array;
+  array = malloc(22300);
+  location = 0;
+  return recurseList(chain);
 }
 
 char* convert_to_infix(char* postfixArray){
@@ -92,7 +100,7 @@ char* convert_to_infix(char* postfixArray){
 
       link = (node*)malloc(sizeof(node));
       link->element = postfixArray[position];
- get_first_node(operand1);
+      get_first_node(operand1);
       node *lastLink = first_most_node;
       link->next = lastLink;
       lastLink->previous = link;
