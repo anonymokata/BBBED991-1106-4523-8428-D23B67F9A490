@@ -11,10 +11,12 @@ struct node
   char element;
   struct node *previous;
   struct node *next;
-
 } *stack[10000000];
+
 typedef struct node node;
 
+node *first_most_node;
+node *last_right_node;
 void push_to_stack(node *link)
 {
   stack[stackIndex] = link;
@@ -29,13 +31,41 @@ node *pop()
   return lastLink;
 }
 
+void get_last_node(node *link)
+{
+  if (link -> next != NULL)
+  {
+    get_last_node(link->next);
+  }
+  else
+  {
+    last_right_node = link; 
+  }
+}
+
+void get_first_node(node *link)
+{
+  if (link -> previous != NULL)
+  {
+    get_first_node(link->previous);
+  }
+  else
+  {
+   first_most_node = link;
+  }
+}
+
 char* getString(node* chain)
 {
-  array = malloc(10);
-  array[0] = chain->previous->element;
-    array[1] = chain->element;
-    array[2] = chain->next->element;
-    array[3] = '\0';
+  array = malloc(200);
+
+  array[0] = chain->element;
+  array[1] = chain->next->element;
+  array[2] = chain->next->next->element;
+  array[3] = chain->next->next->next->element;
+  node *c_node = chain->next->next->next->next;
+  array[4] = c_node->element;
+  printf("this is array[4] %c\n", array[4]);
   return array;
 }
 
@@ -60,18 +90,22 @@ char* convert_to_infix(char* postfixArray){
       operand1 = pop();
       operand2 = pop();
 
-      printf("should be BBBBB %c\n", operand1->element);
-      printf("should be AAAAAA %c\n", operand2->element);
       link = (node*)malloc(sizeof(node));
       link->element = postfixArray[position];
-      link->next = operand1;
-      link->previous  = operand2;
+ get_first_node(operand1);
+      node *lastLink = first_most_node;
+      link->next = lastLink;
+      lastLink->previous = link;
+      get_last_node(operand2);
+      node *firstLink = last_right_node;
+      link->previous  = firstLink;
+      firstLink->next = link;
 
       push_to_stack(link);
 
     }
     position++;
   }
-
-  return getString(pop());
+  get_first_node(pop());
+  return getString(first_most_node);
 };
