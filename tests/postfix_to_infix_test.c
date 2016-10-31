@@ -16,9 +16,10 @@ static char* postfix_to_infix[length][2] = {
 
 START_TEST (convert_postfix_to_infix)
 {
-  char* postfix = convert_to_infix(postfix_to_infix[_i][0]);
+  char* infix = convert_to_infix(postfix_to_infix[_i][0]);
 
-  ck_assert_str_eq(postfix, postfix_to_infix[_i][1]);
+  ck_assert_str_eq(infix, postfix_to_infix[_i][1]);
+ free(infix);
 }
 END_TEST
 
