@@ -65,13 +65,14 @@ char* recurseList(node* chain)
     recurseList(chain->next);
   }else {
     array[indexLocation] = chain->element;
+    array[indexLocation + 1] = '\0';
   }
   return array;
 }
 
-char* getString(node* chain)
+char* getString(node* chain, int arraySize)
 {
-  array = malloc(10);
+  array = malloc(arraySize * sizeof(char));
   return recurseList(chain);
 }
 
@@ -113,5 +114,5 @@ char* convert_to_infix(char* postfixArray){
     position++;
   }
   set_first_node(pop());
-  return getString(first_most_node);
+  return getString(first_most_node, sizeof(postfixArray));
 };

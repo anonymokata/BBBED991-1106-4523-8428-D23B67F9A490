@@ -4,13 +4,14 @@
 #include "../src/postfix_to_infix.h"
 #include "postfix_to_infix_test.h"
 
-static const int length = 5;
+static const int length = 6;
 static char* postfix_to_infix[length][2] = {
   {"ab+", "a+b"},
   {"ab-", "a-b"},
   {"ab*", "a*b"},
   {"abc-+", "a+b-c"},
-  {"ab*cd/+", "a*b+c/d"}
+  {"ab*cd/+", "a*b+c/d"},
+  {"ag+ba-c+cedf^*+^*", "a+g*b-a+c^c+e*d^f"}
   };
 
 START_TEST (convert_postfix_to_infix)
