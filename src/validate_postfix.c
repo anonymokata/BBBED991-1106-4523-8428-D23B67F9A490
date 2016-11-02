@@ -8,13 +8,11 @@ int validate_postfix(char* postfixArray)
 
   for (int i =0; i < strlen(postfixArray); i++)
   {
-
     if (isalnum(postfixArray[i]))
     {
       counter++;
     }
     else {
-
       if (counter < 2){ return 1; }
       counter-=2;
       counter++;
