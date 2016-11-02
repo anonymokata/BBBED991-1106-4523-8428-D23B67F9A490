@@ -15,5 +15,5 @@
 
 int validate_infix(char* infixArray)
 {
-  return 0;
+  return 1;
 }
