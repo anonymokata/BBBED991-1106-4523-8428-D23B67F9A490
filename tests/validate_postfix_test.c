@@ -37,6 +37,14 @@ START_TEST (should_validate_a_plus_b_minus_as_invalid_postfix)
 }
 END_TEST
 
+START_TEST (should_validate_postfix_expression_with_multiple_operators_as__valid_postfix)
+{
+  int valid_postfix = validate_postfix("ag+ba-c+cedf^*+^*");
+
+  ck_assert_int_eq(valid_postfix, 0);
+}
+END_TEST
+
 Suite *validate_postfix_suite(void)
 {
   Suite *s;
@@ -50,6 +58,7 @@ Suite *validate_postfix_suite(void)
   tcase_add_test(tc_validate_postfix, should_validate_a_plus_b_as_invalid_postfix);
   tcase_add_test(tc_validate_postfix, should_validate_a_as_invalid_postfix);
   tcase_add_test(tc_validate_postfix, should_validate_a_plus_b_minus_as_invalid_postfix);
+  tcase_add_test(tc_validate_postfix, should_validate_postfix_expression_with_multiple_operators_as__valid_postfix);
 
   suite_add_tcase(s, tc_validate_postfix);
 
