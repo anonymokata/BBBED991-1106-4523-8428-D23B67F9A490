@@ -1,6 +1,6 @@
 
 
-char* validate_postfix(char* postfixArray) 
+int validate_postfix(char* postfixArray) 
 {
-  return postfixArray;
+  return 0;
 }

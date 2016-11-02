@@ -7,9 +7,9 @@
 
 START_TEST (should_validate_ab_plus_as_valid_postfix)
 {
-  char* foo = validate_postfix("ab+");
+  int valid_postfix = validate_postfix("ab+");
 
-  ck_assert_str_eq(foo, "");
+  ck_assert_int_eq(valid_postfix, 0);
 }
 END_TEST
 
