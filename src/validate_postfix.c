@@ -15,6 +15,7 @@ int validate_postfix(char* postfixArray)
     }
     else {
 
+      if (counter < 2){ return 1; }
       counter-=2;
       counter++;
     }
