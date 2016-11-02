@@ -13,6 +13,14 @@ START_TEST (should_validate_ab_plus_as_valid_postfix)
 }
 END_TEST
 
+START_TEST (should_validate_ab_plus_as_invalid_postfix)
+{
+  int valid_postfix = validate_postfix("a+b");
+
+  ck_assert_int_eq(valid_postfix, 1);
+}
+END_TEST
+
 Suite *validate_postfix_suite(void)
 {
   Suite *s;
@@ -23,6 +31,7 @@ Suite *validate_postfix_suite(void)
   tc_validate_postfix= tcase_create("validate postfix array");
 
   tcase_add_test(tc_validate_postfix, should_validate_ab_plus_as_valid_postfix);
+  tcase_add_test(tc_validate_postfix, should_validate_ab_plus_as_invalid_postfix);
 
   suite_add_tcase(s, tc_validate_postfix);
 
