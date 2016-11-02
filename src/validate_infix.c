@@ -15,5 +15,9 @@
 
 int validate_infix(char* infixArray)
 {
-  return 1;
+  if (strlen(infixArray) < 3) 
+  {
+    return 1;
+  }
+  return 0;
 }
