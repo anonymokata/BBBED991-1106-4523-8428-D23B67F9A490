@@ -31,6 +31,14 @@ START_TEST (should_fail_infix_validation_if_parenthesis_are_not_balanced)
 }
 END_TEST
 
+START_TEST (should_pass_infix_validation_if_parenthesis_are_balanced)
+{
+  int valid_infix = validate_infix("(a+b)");
+
+  ck_assert_int_eq(valid_infix, 0);
+}
+END_TEST
+
 Suite *validate_infix_suite(void)
 {
   Suite *s;
@@ -43,6 +51,7 @@ Suite *validate_infix_suite(void)
   tcase_add_test(tc_validate_infix, should_fail_validation_if_array_is_less_than_3_characters);
   tcase_add_test(tc_validate_infix, should_pass_validation_if_array_has_3_or_characters);
   tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_are_not_balanced);
+  tcase_add_test(tc_validate_infix, should_pass_infix_validation_if_parenthesis_are_balanced);
 
   suite_add_tcase(s, tc_validate_infix);
 

@@ -22,6 +22,10 @@ int validate_infix(char* infixArray)
         {
           counter++;
         }
+        else if (infixArray[i] == ')')
+        {
+          counter--;
+        }
   }
   if (strlen(infixArray) < 3 || counter != 0 ) 
   {
