@@ -15,7 +15,15 @@
 
 int validate_infix(char* infixArray)
 {
-  if (strlen(infixArray) < 3) 
+  int counter= 0;
+  for (int i =0; i < strlen(infixArray); i++)
+  {
+        if (infixArray[i] == '(')
+        {
+          counter++;
+        }
+  }
+  if (strlen(infixArray) < 3 || counter != 0 ) 
   {
     return 1;
   }
