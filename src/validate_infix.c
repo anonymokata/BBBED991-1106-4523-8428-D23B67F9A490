@@ -29,7 +29,7 @@ int validate_infix(char* infixArray)
     else if (!isalnum(infixArray[i]))
     {
 
-        if (infixArray[i + 1] == ')') { return 1; };
+        if (infixArray[i - 1] == '(' || infixArray[i + 1] == ')') { return 1; };
     }
   }
   if (strlen(infixArray) < 3 || counter != 0 ) 

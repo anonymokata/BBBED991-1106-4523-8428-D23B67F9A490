@@ -47,6 +47,14 @@ START_TEST (should_fail_infix_validation_if_operand_is_not_sourounded_by_two_ope
 }
 END_TEST
 
+START_TEST (should_fail_infix_validation_if_operand_is_preceded_by_an_open_parenthesis)
+{
+  int valid_infix = validate_infix("a(+b)");
+
+  ck_assert_int_eq(valid_infix, 1);
+}
+END_TEST
+
 Suite *validate_infix_suite(void)
 {
   Suite *s;
@@ -61,6 +69,7 @@ Suite *validate_infix_suite(void)
   tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_are_not_balanced);
   tcase_add_test(tc_validate_infix, should_pass_infix_validation_if_parenthesis_are_balanced);
   tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_operand_is_not_sourounded_by_two_operators);
+  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_operand_is_preceded_by_an_open_parenthesis);
 
   suite_add_tcase(s, tc_validate_infix);
 
