@@ -64,9 +64,16 @@ START_TEST (should_fail_infix_validation_if_array_length_is_less_than_3_regardle
 END_TEST
 
 START_TEST (should_fail_infix_validation_if_parenthesis_has_no_content)
-
 {
   int valid_infix = validate_infix("()(a+b)()");
+
+  ck_assert_int_eq(valid_infix, 1);
+}
+END_TEST
+
+START_TEST (should_fail_infix_validation_if_parenthesis_are_misordered)
+{
+  int valid_infix = validate_infix("a)v+c-d(b");
 
   ck_assert_int_eq(valid_infix, 1);
 }
@@ -89,6 +96,7 @@ Suite *validate_infix_suite(void)
   tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_operand_is_preceded_by_an_open_parenthesis);
   tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_array_length_is_less_than_3_regardless_of_parentheses);
   tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_has_no_content);
+  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_are_misordered);
 
 
   suite_add_tcase(s, tc_validate_infix);

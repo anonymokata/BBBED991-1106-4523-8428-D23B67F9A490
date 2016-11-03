@@ -29,6 +29,7 @@ int validate_infix(char* infixArray)
     }
     else if (infixArray[i] == ')')
     {
+      if (counter <= 0) { return 1;  };
       counter--;
     }
     else if (!isalnum(infixArray[i]))
