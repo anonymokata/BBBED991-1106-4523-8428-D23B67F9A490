@@ -17,6 +17,7 @@ char* array;
 int indexLocation = 0;
 node *first_most_node;
 node *last_most_node;
+node *link;
 
 void push_to_stack(node *link)
 {
@@ -67,9 +68,17 @@ char* recurseList(node* chain)
     array[indexLocation] = chain->element;
     array[indexLocation + 1] = '\0';
   }
+  // free up chain memory
   return array;
 }
 
+node* createNode(char value) {
+  link = (node*)malloc(sizeof(node));
+  link -> element = value;
+  link -> next = NULL;
+  link -> previous  = NULL;
+  return link;
+}
 char* getString(node* chain, int arraySize)
 {
   array = malloc(arraySize * sizeof(char));
@@ -79,18 +88,13 @@ char* getString(node* chain, int arraySize)
 char* convert_to_infix(char* postfixArray){
   node *operand1;
   node *operand2;
-  node *link;
   int position = 0;
   while (postfixArray[position] != '\0')
 
   {
     if (isalnum(postfixArray[position]))
     {
-      link = (node*)malloc(sizeof(node));
-      link -> element = postfixArray[position];
-      link -> next = NULL;
-      link -> previous  = NULL;
-      push_to_stack(link);
+      push_to_stack(createNode(postfixArray[position]));
     } else
     {
       operand1 = pop();
