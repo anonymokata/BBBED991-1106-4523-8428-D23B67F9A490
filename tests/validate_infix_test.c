@@ -55,6 +55,14 @@ START_TEST (should_fail_infix_validation_if_operand_is_preceded_by_an_open_paren
 }
 END_TEST
 
+START_TEST (should_fail_infix_validation_if_array_length_is_less_than_3_regardless_of_parentheses)
+{
+  int valid_infix = validate_infix("((()))");
+
+  ck_assert_int_eq(valid_infix, 1);
+}
+END_TEST
+
 Suite *validate_infix_suite(void)
 {
   Suite *s;
@@ -70,6 +78,8 @@ Suite *validate_infix_suite(void)
   tcase_add_test(tc_validate_infix, should_pass_infix_validation_if_parenthesis_are_balanced);
   tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_operand_is_not_sourounded_by_two_operators);
   tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_operand_is_preceded_by_an_open_parenthesis);
+  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_array_length_is_less_than_3_regardless_of_parentheses);
+
 
   suite_add_tcase(s, tc_validate_infix);
 

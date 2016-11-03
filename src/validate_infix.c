@@ -13,9 +13,12 @@
  * the parenthesis on eitherside cant be the same type.
  */
 
+#include <string.h>
+#include <ctype.h>
 int validate_infix(char* infixArray)
 {
   int counter= 0;
+  int length = 0;
   for (int i =0; i < strlen(infixArray); i++)
   {
     if (infixArray[i] == '(')
@@ -28,11 +31,16 @@ int validate_infix(char* infixArray)
     }
     else if (!isalnum(infixArray[i]))
     {
-
+        length++;
         if (infixArray[i - 1] == '(' || infixArray[i + 1] == ')') { return 1; };
     }
+    else
+    {
+      length++;
+//it is a letter.
+    }
   }
-  if (strlen(infixArray) < 3 || counter != 0 ) 
+  if (length < 3 || counter != 0 ) 
   {
     return 1;
   }
