@@ -18,14 +18,19 @@ int validate_infix(char* infixArray)
   int counter= 0;
   for (int i =0; i < strlen(infixArray); i++)
   {
-        if (infixArray[i] == '(')
-        {
-          counter++;
-        }
-        else if (infixArray[i] == ')')
-        {
-          counter--;
-        }
+    if (infixArray[i] == '(')
+    {
+      counter++;
+    }
+    else if (infixArray[i] == ')')
+    {
+      counter--;
+    }
+    else if (!isalnum(infixArray[i]))
+    {
+
+        if (infixArray[i + 1] == ')') { return 1; };
+    }
   }
   if (strlen(infixArray) < 3 || counter != 0 ) 
   {
