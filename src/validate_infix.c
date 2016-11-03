@@ -1,33 +1,43 @@
 #include <string.h>
 #include <ctype.h>
 
+int arrayLength = 0;
+
+int validate_operator_or_operand(char* infixArray, int index) {
+  char currentElement = infixArray[index];
+
+  if (!isalnum(currentElement))
+  {
+    arrayLength++;
+    if (infixArray[index - 1] == '(' || infixArray[index + 1] == ')') { return 1; };
+  }
+  else
+  {
+    arrayLength++;
+    if (infixArray[index - 1] == ')' || infixArray[index + 1] == '(') { return 1; };
+  }
+  return 0;
+}
+
 int validate_infix(char* infixArray)
 {
   int counter= 0;
-  int arrayLength = 0;
 
-  for (int i =0; i < strlen(infixArray); i++)
+  for (int index =0; index < strlen(infixArray); index++)
   {
-    char currentElement = infixArray[i];
-    if (currentElement == '(')
-    {
-      if (infixArray[i + 1] == ')') { return 1; };
-      counter++;
-    }
-    else if (currentElement == ')')
-    {
-      if (counter <= 0) { return 1; };
-      counter--;
-    }
-    else if (!isalnum(currentElement))
-    {
-      arrayLength++;
-      if (infixArray[i - 1] == '(' || infixArray[i + 1] == ')') { return 1; };
-    }
-    else
-    {
-      arrayLength++;
-      if (infixArray[i - 1] == ')' || infixArray[i + 1] == '(') { return 1; };
+    char currentElement = infixArray[index];
+
+    switch(currentElement) {
+      case '(' :
+        if (infixArray[index + 1] == ')') { return 1; };
+        counter++;
+        break;
+      case ')' :
+        if (counter <= 0) { return 1; };
+        counter--;
+        break;
+      default :
+       if(validate_operator_or_operand(infixArray, index) == 1) { return 1; };
     }
   }
   if (arrayLength < 3 || counter != 0 ) 
