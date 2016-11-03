@@ -24,6 +24,8 @@ int validate_infix(char* infixArray)
     if (infixArray[i] == '(')
     {
       counter++;
+        if (infixArray[i + 1] == ')') { return 1; };
+
     }
     else if (infixArray[i] == ')')
     {
@@ -37,7 +39,7 @@ int validate_infix(char* infixArray)
     else
     {
       length++;
-//it is a letter.
+        if (infixArray[i - 1] == ')' && infixArray[i + 1] == '(') { return 1; };
     }
   }
   if (length < 3 || counter != 0 ) 
