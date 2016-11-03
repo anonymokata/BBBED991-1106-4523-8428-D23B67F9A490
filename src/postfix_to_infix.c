@@ -33,11 +33,11 @@ node* pop()
   return lastLink;
 }
 
-void set_last_note(node *link)
+void set_last_node(node *link)
 {
   if (link->next != NULL)
   {
-    set_last_note(link->next);
+    set_last_node(link->next);
   }
   else
   {
@@ -85,6 +85,20 @@ char* getString(node* chain, int arraySize)
   return recurseList(chain);
 }
 
+node* add_parenthesis(char* link) {
+  set_first_node(link);
+  set_last_node(link);
+
+        node* open = createNode('(');
+        node* close = createNode(')');
+        first_most_node->previous = open;
+        open->next = first_most_node;
+
+        last_most_node->next = close;
+        close->previous = last_most_node;
+        return first_most_node;
+}
+
 char* convert_to_infix(char* postfixArray){
   node *operand1;
   node *operand2;
@@ -101,7 +115,7 @@ char* convert_to_infix(char* postfixArray){
       operand2 = pop();
 
       set_first_node(operand1);
-      set_last_note(operand2);
+      set_last_node(operand2);
 
       link = (node*)malloc(sizeof(node));
       link->element = postfixArray[position];
@@ -112,7 +126,8 @@ char* convert_to_infix(char* postfixArray){
       link->previous  = firstLink;
       firstLink->next = link;
 
-      push_to_stack(link);
+
+      push_to_stack(add_parenthesis(link));
 
     }
     position++;
