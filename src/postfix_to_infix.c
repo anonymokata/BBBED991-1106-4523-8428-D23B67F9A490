@@ -38,9 +38,7 @@ void set_last_node(node *link)
   if (link->next != NULL)
   {
     set_last_node(link->next);
-  }
-  else
-  {
+  } else {
     last_most_node = link; 
   }
 }
@@ -50,9 +48,7 @@ void set_first_node(node *link)
   if (link->previous != NULL)
   {
     set_first_node(link->previous);
-  }
-  else
-  {
+  } else {
     first_most_node = link;
   }
 }
@@ -64,7 +60,7 @@ char* recurseList(node* chain)
     array[indexLocation] = chain->element;
     indexLocation++;
     recurseList(chain->next);
-  }else {
+  } else {
     array[indexLocation] = chain->element;
     array[indexLocation + 1] = '\0';
   }
@@ -86,12 +82,12 @@ char* getString(node* chain, int arraySize)
   return recurseList(chain);
 }
 
-void prepend(node* link){
+void prependToList(node* link){
   first_most_node->previous = link;
   link->next = first_most_node;
 }
 
-void append(node* link){
+void appendToList(node* link){
   last_most_node->next = link;
   link->previous = last_most_node;
 }
@@ -102,8 +98,9 @@ node* add_parenthesis(node *link) {
 
   node* open = createNode('(');
   node* close = createNode(')');
-  prepend(open);
-  append(close);
+
+  prependToList(open);
+  appendToList(close);
   return first_most_node;
 }
 
@@ -111,28 +108,26 @@ char* convert_to_infix(char* postfixArray){
   node *operand1;
   node *operand2;
   int position = 0;
-  while (postfixArray[position] != '\0')
 
+  while (postfixArray[position] != '\0')
   {
-    if (isalnum(postfixArray[position]))
+        char currentElement =postfixArray[position];
+    if (isalnum(currentElement))
     {
-      push_to_stack(createNode(postfixArray[position]));
-    } else
-    {
+      push_to_stack(createNode(currentElement));
+    } else {
       operand1 = pop();
       operand2 = pop();
 
       set_first_node(operand1);
       set_last_node(operand2);
 
-      createNode(postfixArray[position]);
+      createNode(currentElement);
 
-      prepend(link);
-      append(link);
-
+      prependToList(link);
+      appendToList(link);
 
       push_to_stack(add_parenthesis(link));
-
     }
     position++;
   }
