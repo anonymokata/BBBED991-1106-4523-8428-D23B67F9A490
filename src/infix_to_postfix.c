@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include "validate_infix.h"
 
 char* postfixArray;
 char* stack;
@@ -60,6 +61,8 @@ void build_postfix(char element)
 
 char* convert_to_postfix(char* infixArray)
 {
+  validate_infix(infixArray);
+
   postfixArray = malloc(200);
   stack = malloc(200);
   

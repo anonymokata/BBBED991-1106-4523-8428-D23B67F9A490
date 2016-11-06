@@ -27,6 +27,12 @@ START_TEST (convert_infix_to_postfix_loop)
 }
 END_TEST
 
+START_TEST (should_exit_with_status_1_upon_failure_of_validation)
+{
+    char* invalid_infix = convert_to_postfix("(ab+)");
+}
+END_TEST
+
 Suite *infix_to_postfix_suite(void)
 {
   Suite *s;
@@ -37,6 +43,7 @@ Suite *infix_to_postfix_suite(void)
   tc_convert_to_postfix = tcase_create("Convert to postfix");
 
   tcase_add_loop_test(tc_convert_to_postfix, convert_infix_to_postfix_loop, 0, 12);
+  tcase_add_exit_test(tc_convert_to_postfix, should_exit_with_status_1_upon_failure_of_validation, 1);
 
   suite_add_tcase(s, tc_convert_to_postfix);
 
