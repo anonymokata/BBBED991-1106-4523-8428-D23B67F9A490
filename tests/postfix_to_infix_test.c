@@ -12,14 +12,20 @@ static char* postfix_to_infix[length][2] = {
   {"abc-+", "(a+(b-c))"},
   {"ab*cd/+", "((a*b)+(c/d))"},
   {"ag+ba-c+cedf^*+^*", "((a+g)*(((b-a)+c)^(c+(e*(d^f)))))"}
-  };
+};
 
 START_TEST (convert_postfix_to_infix)
 {
   char* infix = convert_to_infix(postfix_to_infix[_i][0]);
 
   ck_assert_str_eq(infix, postfix_to_infix[_i][1]);
- free(infix);
+  free(infix);
+}
+END_TEST
+
+START_TEST (should_exit_with_status_1_if_postfix_validation_fails)
+{
+  convert_to_infix("a+b");
 }
 END_TEST
 
@@ -33,6 +39,7 @@ Suite *postfix_to_infix_suite(void)
   tc_convert_to_infix = tcase_create("Convert to infix");
 
   tcase_add_loop_test(tc_convert_to_infix, convert_postfix_to_infix, 0, length);
+  tcase_add_exit_test(tc_convert_to_infix, should_exit_with_status_1_if_postfix_validation_fails, 1);
 
   suite_add_tcase(s, tc_convert_to_infix);
 

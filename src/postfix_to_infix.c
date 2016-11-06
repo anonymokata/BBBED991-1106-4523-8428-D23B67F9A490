@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include "validate_postfix.h"
 
 struct node
 {
@@ -105,6 +106,8 @@ node* add_parenthesis(node *link) {
 }
 
 char* convert_to_infix(char* postfixArray){
+  validate_postfix(postfixArray);
+
   node *operand1;
   node *operand2;
   int position = 0;
