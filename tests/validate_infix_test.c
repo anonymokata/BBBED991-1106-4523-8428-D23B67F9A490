@@ -8,82 +8,72 @@
 
 START_TEST (should_fail_validation_if_array_is_less_than_3_characters)
 {
-  int valid_infix = validate_infix("a+");
-
-  ck_assert_int_eq(valid_infix, 1);
+  validate_infix("a+");
 }
 END_TEST
 
 START_TEST (should_pass_validation_if_array_has_3_or_characters)
 {
-  int valid_infix = validate_infix("a+b");
-
-  ck_assert_int_eq(valid_infix, 0);
+  validate_infix("a+b");
 }
 END_TEST
 
-
 START_TEST (should_fail_infix_validation_if_parenthesis_are_not_balanced)
 {
-  int valid_infix = validate_infix("(a+b");
-
-  ck_assert_int_eq(valid_infix, 1);
+  validate_infix("(a+b");
 }
 END_TEST
 
 START_TEST (should_pass_infix_validation_if_parenthesis_are_balanced)
 {
-  int valid_infix = validate_infix("(a+b)");
-
-  ck_assert_int_eq(valid_infix, 0);
+  validate_infix("(a+b)");
 }
 END_TEST
 
 START_TEST (should_fail_infix_validation_if_operand_is_not_sourounded_by_two_operators)
 {
-  int valid_infix = validate_infix("(ab+)");
-
-  ck_assert_int_eq(valid_infix, 1);
+  validate_infix("(ab+)");
 }
 END_TEST
 
 START_TEST (should_fail_infix_validation_if_operand_is_preceded_by_an_open_parenthesis)
 {
-  int valid_infix = validate_infix("a(+b)");
+  validate_infix("a(+b)");
 
-  ck_assert_int_eq(valid_infix, 1);
 }
 END_TEST
 
 START_TEST (should_fail_infix_validation_if_array_length_is_less_than_3_regardless_of_parentheses)
 {
-  int valid_infix = validate_infix("((()))");
-
-  ck_assert_int_eq(valid_infix, 1);
+  validate_infix("((()))");
 }
+
 END_TEST
 
 START_TEST (should_fail_infix_validation_if_parenthesis_has_no_content)
 {
-  int valid_infix = validate_infix("()(a+b)()");
-
-  ck_assert_int_eq(valid_infix, 1);
+  validate_infix("()(a+b)()");
 }
+
 END_TEST
 
 START_TEST (should_fail_infix_validation_if_parenthesis_are_misordered)
 {
-  int valid_infix = validate_infix("a)v+c-d(b");
-
-  ck_assert_int_eq(valid_infix, 1);
+  validate_infix("a)v+c-d(b");
 }
+
 END_TEST
 
 START_TEST (should_fail_infix_validation_if_operands_are_not_explicitly_expressed)
 {
-  int valid_infix = validate_infix("a(v+c-d)b");
+  validate_infix("a(v+c-d)b");
+}
 
-  ck_assert_int_eq(valid_infix, 1);
+END_TEST
+
+START_TEST (should_raise_signal_upon_failure_of_validation)
+{
+  validate_infix("(ab+)");
 }
 END_TEST
 
@@ -96,16 +86,17 @@ Suite *validate_infix_suite(void)
 
   tc_validate_infix= tcase_create("validate infix array");
 
-  tcase_add_test(tc_validate_infix, should_fail_validation_if_array_is_less_than_3_characters);
-  tcase_add_test(tc_validate_infix, should_pass_validation_if_array_has_3_or_characters);
-  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_are_not_balanced);
-  tcase_add_test(tc_validate_infix, should_pass_infix_validation_if_parenthesis_are_balanced);
-  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_operand_is_not_sourounded_by_two_operators);
-  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_operand_is_preceded_by_an_open_parenthesis);
-  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_array_length_is_less_than_3_regardless_of_parentheses);
-  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_has_no_content);
-  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_are_misordered);
-  tcase_add_test(tc_validate_infix, should_fail_infix_validation_if_operands_are_not_explicitly_expressed);
+  tcase_add_exit_test(tc_validate_infix, should_fail_validation_if_array_is_less_than_3_characters,1 );
+  tcase_add_exit_test(tc_validate_infix, should_pass_validation_if_array_has_3_or_characters, 0);
+  tcase_add_exit_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_are_not_balanced, 1);
+  tcase_add_exit_test(tc_validate_infix, should_pass_infix_validation_if_parenthesis_are_balanced, 0);
+  tcase_add_exit_test(tc_validate_infix, should_fail_infix_validation_if_operand_is_not_sourounded_by_two_operators, 1);
+  tcase_add_exit_test(tc_validate_infix, should_fail_infix_validation_if_operand_is_preceded_by_an_open_parenthesis, 1);
+  tcase_add_exit_test(tc_validate_infix, should_fail_infix_validation_if_array_length_is_less_than_3_regardless_of_parentheses, 1);
+  tcase_add_exit_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_has_no_content, 1);
+  tcase_add_exit_test(tc_validate_infix, should_fail_infix_validation_if_parenthesis_are_misordered, 1);
+  tcase_add_exit_test(tc_validate_infix, should_fail_infix_validation_if_operands_are_not_explicitly_expressed, 1);
+  tcase_add_exit_test(tc_validate_infix, should_raise_signal_upon_failure_of_validation, 1);
 
 
   suite_add_tcase(s, tc_validate_infix);

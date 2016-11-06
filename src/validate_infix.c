@@ -1,5 +1,7 @@
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 int arrayLength = 0;
 
@@ -9,17 +11,17 @@ int validate_operator_or_operand(char* infixArray, int index) {
   if (!isalnum(currentElement))
   {
     arrayLength++;
-    if (infixArray[index - 1] == '(' || infixArray[index + 1] == ')') { return 1; };
+    if (infixArray[index - 1] == '(' || infixArray[index + 1] == ')') { exit(EXIT_FAILURE); };
   }
   else
   {
     arrayLength++;
-    if (infixArray[index - 1] == ')' || infixArray[index + 1] == '(') { return 1; };
+    if (infixArray[index - 1] == ')' || infixArray[index + 1] == '(') { exit(EXIT_FAILURE); };
   }
   return 0;
 }
 
-int validate_infix(char* infixArray)
+void validate_infix(char* infixArray)
 {
   int counter= 0;
 
@@ -29,20 +31,21 @@ int validate_infix(char* infixArray)
 
     switch(currentElement) {
       case '(' :
-        if (infixArray[index + 1] == ')') { return 1; };
+        if (infixArray[index + 1] == ')') { exit(EXIT_FAILURE);};
         counter++;
         break;
       case ')' :
-        if (counter <= 0) { return 1; };
+        if (counter <= 0) { exit(EXIT_FAILURE); };
         counter--;
         break;
       default :
-       if(validate_operator_or_operand(infixArray, index) == 1) { return 1; };
+        if(validate_operator_or_operand(infixArray, index) == 1) { exit(EXIT_FAILURE);};
     }
   }
   if (arrayLength < 3 || counter != 0 ) 
   {
-    return 1;
+    exit(EXIT_FAILURE);
   }
-  return 0;
+
+  exit(0);
 }

@@ -111,7 +111,8 @@ char* convert_to_infix(char* postfixArray){
 
   while (postfixArray[position] != '\0')
   {
-        char currentElement =postfixArray[position];
+    char currentElement =postfixArray[position];
+
     if (isalnum(currentElement))
     {
       push_to_stack(createNode(currentElement));
