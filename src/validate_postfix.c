@@ -1,8 +1,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-int validate_postfix(char* postfixArray) 
+void validate_postfix(char* postfixArray) 
 {
   int counter = 0;
 
@@ -13,13 +14,13 @@ int validate_postfix(char* postfixArray)
       counter++;
     }
     else {
-      if (counter < 2){ return 1; }
+      if (counter < 2){ exit(EXIT_FAILURE); }
       counter-=2;
       counter++;
     }
   }
 
-  if (counter != 1 || strlen(postfixArray) < 3) { return 1; }
+  if (counter != 1 || strlen(postfixArray) < 3) { exit(EXIT_FAILURE); }
 
-  return 0;
+  exit(EXIT_SUCCESS);
 }
