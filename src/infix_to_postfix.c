@@ -63,8 +63,8 @@ char* convert_to_postfix(char* infixArray)
 {
   validate_infix(infixArray);
 
-  postfixArray = malloc(200);
-  stack = malloc(200);
+  postfixArray = malloc(sizeof(char) * sizeof(infixArray) * 2 );
+  stack = malloc(sizeof(char) * sizeof(infixArray));
   
   while (infixArray[infixArrayPosition] != '\0')
   {
@@ -91,5 +91,6 @@ char* convert_to_postfix(char* infixArray)
   }
 
   dump_stack(); 
+  free(stack);
   return postfixArray;
 }

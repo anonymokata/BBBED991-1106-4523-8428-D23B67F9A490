@@ -65,7 +65,6 @@ char* recurseList(node* chain)
     array[indexLocation] = chain->element;
     array[indexLocation + 1] = '\0';
   }
-  // free up chain memory
   return array;
 }
 
@@ -105,6 +104,17 @@ node* add_parenthesis(node *link) {
   return first_most_node;
 }
 
+void free_nodes(node* chain){
+  if (chain->next)
+  {
+    node* temp = chain->next;
+    free(chain);
+    free_nodes(temp);
+  } else {
+    free(chain);
+  }
+}
+
 char* convert_to_infix(char* postfixArray){
   validate_postfix(postfixArray);
 
@@ -136,5 +146,8 @@ char* convert_to_infix(char* postfixArray){
     position++;
   }
   set_first_node(pop());
-  return getString(first_most_node, sizeof(postfixArray));
+  char* stringArray = getString(first_most_node, sizeof(postfixArray)); 
+  free(operand1);
+  free(operand2);
+  return stringArray; 
 };
