@@ -10,7 +10,7 @@ struct node
   char element;
   struct node *previous;
   struct node *next;
-} *stack[110];
+} *stack[3];
 
 typedef struct node node;
 int stackIndex = 0;
@@ -104,17 +104,6 @@ node* add_parenthesis(node *link) {
   return first_most_node;
 }
 
-void free_nodes(node* chain){
-  if (chain->next)
-  {
-    node* temp = chain->next;
-    free(chain);
-    free_nodes(temp);
-  } else {
-    free(chain);
-  }
-}
-
 char* convert_to_infix(char* postfixArray){
   validate_postfix(postfixArray);
 
@@ -124,7 +113,7 @@ char* convert_to_infix(char* postfixArray){
 
   while (postfixArray[position] != '\0')
   {
-    char currentElement =postfixArray[position];
+    char currentElement = postfixArray[position];
 
     if (isalnum(currentElement))
     {
