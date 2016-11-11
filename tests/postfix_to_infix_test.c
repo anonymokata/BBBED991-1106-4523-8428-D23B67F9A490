@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include "../src/postfix_to_infix.h"
 #include "postfix_to_infix_test.h"
+#define length 6
 
-static const int length = 6;
 static char* postfix_to_infix[length][2] = {
   {"ab+", "(a+b)"},
   {"ab-", "(a-b)"},
