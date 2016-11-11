@@ -21,6 +21,4 @@ void validate_postfix(char* postfixArray)
   }
 
   if (counter != 1 || strlen(postfixArray) < 3) { exit(EXIT_FAILURE); }
-
-  exit(EXIT_SUCCESS);
 }

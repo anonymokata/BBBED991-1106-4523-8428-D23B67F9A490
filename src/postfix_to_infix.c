@@ -10,7 +10,7 @@ struct node
   char element;
   struct node *previous;
   struct node *next;
-} *stack[110];
+} *stack[3];
 
 typedef struct node node;
 int stackIndex = 0;
@@ -65,7 +65,6 @@ char* recurseList(node* chain)
     array[indexLocation] = chain->element;
     array[indexLocation + 1] = '\0';
   }
-  // free up chain memory
   return array;
 }
 
@@ -114,7 +113,7 @@ char* convert_to_infix(char* postfixArray){
 
   while (postfixArray[position] != '\0')
   {
-    char currentElement =postfixArray[position];
+    char currentElement = postfixArray[position];
 
     if (isalnum(currentElement))
     {
@@ -136,5 +135,8 @@ char* convert_to_infix(char* postfixArray){
     position++;
   }
   set_first_node(pop());
-  return getString(first_most_node, sizeof(postfixArray));
+  char* stringArray = getString(first_most_node, sizeof(postfixArray)); 
+  free(operand1);
+  free(operand2);
+  return stringArray; 
 };

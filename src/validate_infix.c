@@ -47,5 +47,4 @@ void validate_infix(char* infixArray)
     exit(EXIT_FAILURE);
   }
 
-  exit(0);
 }

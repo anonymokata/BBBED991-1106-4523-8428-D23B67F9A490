@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include "../src/postfix_to_infix.h"
 #include "postfix_to_infix_test.h"
+#define length 6
 
-static const int length = 6;
 static char* postfix_to_infix[length][2] = {
   {"ab+", "(a+b)"},
   {"ab-", "(a-b)"},
@@ -17,7 +17,6 @@ static char* postfix_to_infix[length][2] = {
 START_TEST (convert_postfix_to_infix)
 {
   char* infix = convert_to_infix(postfix_to_infix[_i][0]);
-
   ck_assert_str_eq(infix, postfix_to_infix[_i][1]);
   free(infix);
 }

@@ -63,8 +63,8 @@ char* convert_to_postfix(char* infixArray)
 {
   validate_infix(infixArray);
 
-  postfixArray = malloc(200);
-  stack = malloc(200);
+  postfixArray = malloc(sizeof(char) * sizeof(infixArray));
+  stack = malloc(sizeof(char) * sizeof(infixArray));
   
   while (infixArray[infixArrayPosition] != '\0')
   {
@@ -72,10 +72,8 @@ char* convert_to_postfix(char* infixArray)
     {
       push_stack(infixArray[infixArrayPosition]);
       infixArrayPosition++;
-      continue;
     }
-
-    if (infixArray[infixArrayPosition] == ')')
+    else if (infixArray[infixArrayPosition] == ')')
     {
       infixArrayPosition++;
       while(stack[stackPosition-1] != '(')
@@ -84,12 +82,15 @@ char* convert_to_postfix(char* infixArray)
         stackPosition--;
       }
         stackPosition--;
-      continue;
-    }
+    } else {
     build_postfix(infixArray[infixArrayPosition]);
     infixArrayPosition++;
+    }
   }
 
   dump_stack(); 
+  free(stack);
+  push(infixArrayPosition, '\0');
+
   return postfixArray;
 }
