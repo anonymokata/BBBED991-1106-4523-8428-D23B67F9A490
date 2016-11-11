@@ -39,7 +39,6 @@ END_TEST
 START_TEST (should_fail_infix_validation_if_operand_is_preceded_by_an_open_parenthesis)
 {
   validate_infix("a(+b)");
-
 }
 END_TEST
 
