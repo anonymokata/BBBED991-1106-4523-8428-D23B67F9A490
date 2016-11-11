@@ -5,8 +5,7 @@
 #include <stdbool.h>
 #include "validate_postfix.h"
 
-struct node
-{
+struct node {
   char element;
   struct node *previous;
   struct node *next;
@@ -14,109 +13,98 @@ struct node
 
 typedef struct node node;
 int stackIndex = 0;
-char* array;
+char *array;
 int indexLocation = 0;
 node *first_most_node;
 node *last_most_node;
 node *link;
 
-void push_to_stack(node *link)
-{
+void push_to_stack(node *link) {
   stack[stackIndex] = link;
   stackIndex++;
 }
 
-node* pop()
-{
+node *pop() {
   node *lastLink;
   lastLink = stack[stackIndex - 1];
   stackIndex--;
   return lastLink;
 }
 
-void set_last_node(node *link)
-{
-  if (link->next != NULL)
-  {
-    set_last_node(link->next);
+void set_last_node(node *link) {
+  if (link -> next != NULL) {
+    set_last_node(link -> next);
   } else {
-    last_most_node = link; 
+    last_most_node = link;
   }
 }
 
-void set_first_node(node *link)
-{
-  if (link->previous != NULL)
-  {
-    set_first_node(link->previous);
+void set_first_node(node *link) {
+  if (link -> previous != NULL) {
+    set_first_node(link -> previous);
   } else {
     first_most_node = link;
   }
 }
 
-char* recurseList(node* chain)
-{
-  if (chain->next)
-  {
-    array[indexLocation] = chain->element;
+char *recurseList(node *chain) {
+  if (chain -> next) {
+    array[indexLocation] = chain -> element;
     indexLocation++;
-    recurseList(chain->next);
+    recurseList(chain -> next);
   } else {
-    array[indexLocation] = chain->element;
+    array[indexLocation] = chain -> element;
     array[indexLocation + 1] = '\0';
   }
   return array;
 }
 
-node* createNode(char value) {
-  link = (node*)malloc(sizeof(node));
+node *createNode(char value) {
+  link = (node *) malloc(sizeof(node));
   link -> element = value;
   link -> next = NULL;
-  link -> previous  = NULL;
+  link -> previous = NULL;
   return link;
 }
 
-char* getString(node* chain, int arraySize)
-{
-  array = malloc(arraySize * sizeof(char));
+char *getString(node *chain, int arraySize) {
+  array = malloc(arraySize *sizeof(char));
   return recurseList(chain);
 }
 
-void prependToList(node* link){
-  first_most_node->previous = link;
-  link->next = first_most_node;
+void prependToList(node *link) {
+  first_most_node -> previous = link;
+  link -> next = first_most_node;
 }
 
-void appendToList(node* link){
-  last_most_node->next = link;
-  link->previous = last_most_node;
+void appendToList(node *link) {
+  last_most_node -> next = link;
+  link -> previous = last_most_node;
 }
 
-node* add_parenthesis(node *link) {
+node *add_parenthesis(node *link) {
   set_first_node(link);
   set_last_node(link);
 
-  node* open = createNode('(');
-  node* close = createNode(')');
+  node *open = createNode('(');
+  node *close = createNode(')');
 
   prependToList(open);
   appendToList(close);
   return first_most_node;
 }
 
-char* convert_to_infix(char* postfixArray){
+char *convert_to_infix(char *postfixArray) {
   validate_postfix(postfixArray);
 
   node *operand1;
   node *operand2;
   int position = 0;
 
-  while (postfixArray[position] != '\0')
-  {
+  while (postfixArray[position] != '\0') {
     char currentElement = postfixArray[position];
 
-    if (isalnum(currentElement))
-    {
+    if (isalnum(currentElement)) {
       push_to_stack(createNode(currentElement));
     } else {
       operand1 = pop();
@@ -135,8 +123,8 @@ char* convert_to_infix(char* postfixArray){
     position++;
   }
   set_first_node(pop());
-  char* stringArray = getString(first_most_node, sizeof(postfixArray)); 
+  char *stringArray = getString(first_most_node, sizeof(postfixArray));
   free(operand1);
   free(operand2);
-  return stringArray; 
+  return stringArray;
 };

@@ -5,7 +5,7 @@
 #include "postfix_to_infix_test.h"
 #define length 6
 
-static char* postfix_to_infix[length][2] = {
+static char *postfix_to_infix[length][2] = {
   {"ab+", "(a+b)"},
   {"ab-", "(a-b)"},
   {"ab*", "(a*b)"},
@@ -14,22 +14,19 @@ static char* postfix_to_infix[length][2] = {
   {"ag+ba-c+cedf^*+^*", "((a+g)*(((b-a)+c)^(c+(e*(d^f)))))"}
 };
 
-START_TEST (convert_postfix_to_infix)
-{
-  char* infix = convert_to_infix(postfix_to_infix[_i][0]);
+START_TEST(convert_postfix_to_infix) {
+  char *infix = convert_to_infix(postfix_to_infix[_i][0]);
   ck_assert_str_eq(infix, postfix_to_infix[_i][1]);
   free(infix);
 }
 END_TEST
 
-START_TEST (should_exit_with_status_1_if_postfix_validation_fails)
-{
+START_TEST(should_exit_with_status_1_if_postfix_validation_fails) {
   convert_to_infix("a+b");
 }
 END_TEST
 
-Suite *postfix_to_infix_suite(void)
-{
+Suite *postfix_to_infix_suite(void) {
   Suite *s;
   TCase *tc_convert_to_infix;
 
