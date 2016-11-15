@@ -59,7 +59,7 @@ char *recurseList(node *chain) {
   return array;
 }
 
-node *createNode(char value) {
+node *createLink(char value) {
   link = (node *) malloc(sizeof(node));
   link -> element = value;
   link -> next = NULL;
@@ -86,8 +86,8 @@ node *add_parenthesis(node *link) {
   set_first_node(link);
   set_last_node(link);
 
-  node *open = createNode('(');
-  node *close = createNode(')');
+  node *open = createLink('(');
+  node *close = createLink(')');
 
   prependToList(open);
   appendToList(close);
@@ -105,7 +105,7 @@ char *convert_to_infix(char *postfixArray) {
     char currentElement = postfixArray[position];
 
     if (isalnum(currentElement)) {
-      push_to_stack(createNode(currentElement));
+      push_to_stack(createLink(currentElement));
     } else {
       operand1 = pop();
       operand2 = pop();
@@ -113,7 +113,7 @@ char *convert_to_infix(char *postfixArray) {
       set_first_node(operand1);
       set_last_node(operand2);
 
-      createNode(currentElement);
+      createLink(currentElement);
 
       prependToList(link);
       appendToList(link);
