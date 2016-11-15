@@ -15,8 +15,8 @@ typedef struct node node;
 int stackIndex = 0;
 char *array;
 int indexLocation = 0;
-node *first_most_node;
-node *last_most_node;
+node *firstMostNode;
+node *lastMostNode;
 node *link;
 
 void push_to_stack(node *link) {
@@ -35,7 +35,7 @@ void set_last_node(node *link) {
   if (link -> next != NULL) {
     set_last_node(link -> next);
   } else {
-    last_most_node = link;
+    lastMostNode = link;
   }
 }
 
@@ -43,15 +43,15 @@ void set_first_node(node *link) {
   if (link -> previous != NULL) {
     set_first_node(link -> previous);
   } else {
-    first_most_node = link;
+    firstMostNode = link;
   }
 }
 
-char *recurseList(node *chain) {
+char *recurse_list(node *chain) {
   if (chain -> next) {
     array[indexLocation] = chain -> element;
     indexLocation++;
-    recurseList(chain -> next);
+    recurse_list(chain -> next);
   } else {
     array[indexLocation] = chain -> element;
     array[indexLocation + 1] = '\0';
@@ -59,7 +59,7 @@ char *recurseList(node *chain) {
   return array;
 }
 
-node *createLink(char value) {
+node *create_link(char value) {
   link = (node *) malloc(sizeof(node));
   link -> element = value;
   link -> next = NULL;
@@ -67,31 +67,31 @@ node *createLink(char value) {
   return link;
 }
 
-char *getString(node *chain, int arraySize) {
+char *get_string(node *chain, int arraySize) {
   array = malloc(arraySize *sizeof(char));
-  return recurseList(chain);
+  return recurse_list(chain);
 }
 
-void prependToList(node *link) {
-  first_most_node -> previous = link;
-  link -> next = first_most_node;
+void prepend_to_list(node *link) {
+  firstMostNode -> previous = link;
+  link -> next = firstMostNode;
 }
 
-void appendToList(node *link) {
-  last_most_node -> next = link;
-  link -> previous = last_most_node;
+void append_to_list(node *link) {
+  lastMostNode -> next = link;
+  link -> previous = lastMostNode;
 }
 
 node *add_parenthesis(node *link) {
   set_first_node(link);
   set_last_node(link);
 
-  node *open = createLink('(');
-  node *close = createLink(')');
+  node *open = create_link('(');
+  node *close = create_link(')');
 
-  prependToList(open);
-  appendToList(close);
-  return first_most_node;
+  prepend_to_list(open);
+  append_to_list(close);
+  return firstMostNode;
 }
 
 char *convert_to_infix(char *postfixArray) {
@@ -105,7 +105,7 @@ char *convert_to_infix(char *postfixArray) {
     char currentElement = postfixArray[position];
 
     if (isalnum(currentElement)) {
-      push_to_stack(createLink(currentElement));
+      push_to_stack(create_link(currentElement));
     } else {
       operand1 = pop();
       operand2 = pop();
@@ -113,17 +113,17 @@ char *convert_to_infix(char *postfixArray) {
       set_first_node(operand1);
       set_last_node(operand2);
 
-      createLink(currentElement);
+      create_link(currentElement);
 
-      prependToList(link);
-      appendToList(link);
+      prepend_to_list(link);
+      append_to_list(link);
 
       push_to_stack(add_parenthesis(link));
     }
     position++;
   }
   set_first_node(pop());
-  char *stringArray = getString(first_most_node, sizeof(postfixArray));
+  char *stringArray = get_string(firstMostNode, sizeof(postfixArray));
   free(operand1);
   free(operand2);
   return stringArray;
