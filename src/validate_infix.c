@@ -50,5 +50,5 @@ void validate_infix(char *infixArray) {
   if (arrayLength < 3 || counter != 0) {
     exit(EXIT_FAILURE);
   }
-
+  exit(0);
 }
