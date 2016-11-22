@@ -9,7 +9,7 @@ struct node {
   char element;
   struct node *previous;
   struct node *next;
-} *stack[3];
+} *stack;
 
 typedef struct node node;
 int stackIndex = 0;
@@ -20,13 +20,13 @@ node *lastMostNode;
 node *link;
 
 void push_to_stack(node *link) {
-  stack[stackIndex] = link;
+  stack[stackIndex] = *link;
   stackIndex++;
 }
 
 node *pop() {
   node *lastLink;
-  lastLink = stack[stackIndex - 1];
+  lastLink = &stack[stackIndex - 1];
   stackIndex--;
   return lastLink;
 }
