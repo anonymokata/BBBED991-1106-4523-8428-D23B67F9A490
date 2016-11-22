@@ -11,7 +11,7 @@ int postfixArrayPosition = 0;
 int stackPosition = 0;
 int infixStringPosition = 0;
 
-int get_presidence(char element) {
+int get_precedence(char element) {
   switch (element) {
   case '+':
     return 1;
@@ -48,7 +48,7 @@ void build_postfix(char element) {
   if (isalnum(element)) {
     push(postfixArrayPosition, element);
   } else {
-    if (get_presidence(element) < get_presidence(stack[stackPosition - 1])) {
+    if (get_precedence(element) < get_precedence(stack[stackPosition - 1])) {
       dump_stack();
     }
     push_stack(element);
