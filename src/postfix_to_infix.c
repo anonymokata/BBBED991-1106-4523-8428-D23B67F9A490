@@ -94,15 +94,15 @@ node *add_parenthesis(node *link) {
   return firstMostNode;
 }
 
-char *convert_to_infix(char *postfixArray) {
-  validate_postfix(postfixArray);
+char *convert_to_infix(char *postfixString) {
+  validate_postfix(postfixString);
 
   node *operand1;
   node *operand2;
   int position = 0;
 
-  while (postfixArray[position] != '\0') {
-    char currentElement = postfixArray[position];
+  while (postfixString[position] != '\0') {
+    char currentElement = postfixString[position];
 
     if (isalnum(currentElement)) {
       push_to_stack(create_link(currentElement));
@@ -123,7 +123,7 @@ char *convert_to_infix(char *postfixArray) {
     position++;
   }
   set_first_node(pop());
-  char *stringArray = get_string(firstMostNode, sizeof(postfixArray));
+  char *stringArray = get_string(firstMostNode, sizeof(postfixString));
   free(operand1);
   free(operand2);
   return stringArray;
