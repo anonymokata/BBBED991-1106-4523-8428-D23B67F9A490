@@ -3,27 +3,80 @@
 #include <stdio.h>
 #include "../src/infix_to_postfix.h"
 #include "infix_to_postfix_test.h"
-#define arrayLength 12
 
-static char *infix_to_postfix[arrayLength][2] = {
-  {"a+b", "ab+"},
-  {"a-b", "ab-"},
-  {"a*b", "ab*"},
-  {"a/b", "ab/"},
-  {"a^b", "ab^"},
-  {"a+b-c", "abc-+"},
-  {"a*b+c", "ab*c+"},
-  {"a*b+c/d", "ab*cd/+"},
-  {"a^b+c", "ab^c+"},
-  {"l/m^n*o-p", "lmn^/o*p-"},
-  {"(a+b)-c", "ab+c-"},
-  {"((v/w)^x)*(y-z)", "vw/x^yz-*"}
-};
+START_TEST(should_convert_infix_with_addition_operator_to_postfix) {
+  char *postfix = convert_to_postfix("a+b");
+  ck_assert_str_eq(postfix, "ab+");
+  free(postfix);
+}
+END_TEST
 
-START_TEST(convert_infix_to_postfix_loop) {
-  char *postfix = convert_to_postfix(infix_to_postfix[_i][0]);
+START_TEST(should_convert_infix_with_subtract_operator_to_postfix) {
+  char *postfix = convert_to_postfix("a-b");
+  ck_assert_str_eq(postfix, "ab-");
+  free(postfix);
+}
+END_TEST
 
-  ck_assert_str_eq(postfix, infix_to_postfix[_i][1]);
+START_TEST(should_convert_infix_with_division_operator_to_postfix) {
+  char *postfix = convert_to_postfix("a/b");
+  ck_assert_str_eq(postfix, "ab/");
+  free(postfix);
+}
+END_TEST
+
+START_TEST(should_convert_infix_with_multiplication_operator_to_postfix) {
+  char *postfix = convert_to_postfix("a*b");
+  ck_assert_str_eq(postfix, "ab*");
+  free(postfix);
+}
+END_TEST
+
+START_TEST(should_convert_infix_with_exponant_operator_to_postfix) {
+  char *postfix = convert_to_postfix("a^b");
+  ck_assert_str_eq(postfix, "ab^");
+  free(postfix);
+}
+END_TEST
+
+START_TEST(should_convert_infix_with_multiple_operands_with_equal_precedence) {
+  char *postfix = convert_to_postfix("a+b-c");
+  ck_assert_str_eq(postfix, "abc-+");
+  free(postfix);
+}
+END_TEST
+
+START_TEST(should_convert_infix_with_addition_multiplication_and_division) {
+  char *postfix = convert_to_postfix("a*b+c/d");
+  ck_assert_str_eq(postfix, "ab*cd/+");
+  free(postfix);
+}
+END_TEST
+
+START_TEST(should_convert_infix_with_exponents_and_addition) {
+  char *postfix = convert_to_postfix("a^b+c");
+  ck_assert_str_eq(postfix, "ab^c+");
+  free(postfix);
+}
+END_TEST
+
+START_TEST(should_convert_infix_with_multiple_operands_with_different_precedence) {
+  char *postfix = convert_to_postfix("l/m^n*o-p");
+  ck_assert_str_eq(postfix, "lmn^/o*p-");
+  free(postfix);
+}
+END_TEST
+
+START_TEST(should_convert_infix_with_respect_to_parenthesis) {
+  char *postfix = convert_to_postfix("(a+b)-c");
+  ck_assert_str_eq(postfix, "ab+c-");
+  free(postfix);
+}
+END_TEST
+
+START_TEST(should_convert_infix_with_multiple_parenthesis_and_operators) {
+  char *postfix = convert_to_postfix("((v/w)^x)*(y-z)");
+  ck_assert_str_eq(postfix, "vw/x^yz-*");
   free(postfix);
 }
 END_TEST
@@ -42,7 +95,17 @@ Suite *infix_to_postfix_suite(void) {
 
   tc_convert_to_postfix = tcase_create("Convert to postfix");
 
-  tcase_add_loop_test(tc_convert_to_postfix, convert_infix_to_postfix_loop, 0, arrayLength);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_addition_operator_to_postfix);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_subtract_operator_to_postfix);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_division_operator_to_postfix);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_multiplication_operator_to_postfix);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_exponant_operator_to_postfix);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_multiple_operands_with_equal_precedence);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_addition_multiplication_and_division);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_exponents_and_addition);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_multiple_operands_with_different_precedence);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_respect_to_parenthesis);
+  tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_multiple_parenthesis_and_operators);
   tcase_add_exit_test(tc_convert_to_postfix, should_exit_with_status_1_upon_failure_of_validation, 1);
 
   suite_add_tcase(s, tc_convert_to_postfix);
