@@ -7,9 +7,9 @@
 char *postfixArray;
 char *stack;
 
-int postfixArrayPosition = 0;
-int stackPosition = 0;
-int infixStringPosition = 0;
+static int postfixArrayPosition = 0;
+static int stackPosition = 0;
+static int infixStringPosition = 0;
 
 int get_precedence(char element) {
   switch (element) {
@@ -55,11 +55,21 @@ void build_postfix(char element) {
   }
 }
 
+void dump_partial_stack() {
+  while (stack[stackPosition - 1] != '(') {
+    push(postfixArrayPosition, stack[stackPosition - 1]);
+    stackPosition--;
+  }
+  stackPosition--;
+}
+
+void set_max_array_size(int length) {
+  postfixArray = malloc(sizeof(char) * length);
+  stack = malloc(sizeof(char) * length);
+}
 const char *convert_to_postfix(char *infixString) {
   validate_infix(infixString);
-
-  postfixArray = malloc(sizeof(char) * strlen(infixString));
-  stack = malloc(sizeof(char) * strlen(infixString));
+  set_max_array_size(strlen(infixString));
 
   while (infixString[infixStringPosition] != '\0') {
     if (infixString[infixStringPosition] == '(') {
@@ -67,17 +77,12 @@ const char *convert_to_postfix(char *infixString) {
       infixStringPosition++;
     } else if (infixString[infixStringPosition] == ')') {
       infixStringPosition++;
-      while (stack[stackPosition - 1] != '(') {
-        push(postfixArrayPosition, stack[stackPosition - 1]);
-        stackPosition--;
-      }
-      stackPosition--;
+      dump_partial_stack();
     } else {
       build_postfix(infixString[infixStringPosition]);
       infixStringPosition++;
     }
   }
-
   dump_stack();
   free(stack);
   push(infixStringPosition, '\0');
