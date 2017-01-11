@@ -55,7 +55,7 @@ void build_postfix(char element) {
   }
 }
 
-char *convert_to_postfix(char *infixString) {
+const char *convert_to_postfix(char *infixString) {
   validate_infix(infixString);
 
   postfixArray = malloc(sizeof(char) * strlen(infixString));
