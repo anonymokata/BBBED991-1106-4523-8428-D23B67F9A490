@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void validate_postfix(char *postfixArray) {
+int validate_postfix(char *postfixArray) {
   int counter = 0;
 
   for (int i = 0; i < strlen(postfixArray); i++) {
@@ -11,7 +11,7 @@ void validate_postfix(char *postfixArray) {
       counter++;
     } else {
       if (counter < 2) {
-        exit(EXIT_FAILURE);
+        return 24;
       }
       counter -= 2;
       counter++;
@@ -19,7 +19,7 @@ void validate_postfix(char *postfixArray) {
   }
 
   if (counter != 1 || strlen(postfixArray) < 3) {
-    exit(EXIT_FAILURE);
+    return 22;
   }
-  exit(EXIT_SUCCESS);
+  exit(0);
 }
