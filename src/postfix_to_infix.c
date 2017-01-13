@@ -95,19 +95,10 @@ node *add_parenthesis(node *link) {
   return firstMostNode;
 }
 
-void exit_and_print_error(int err) {
-  for (int j =0; j < 5; j++) {
-    if(number_to_message[j].num == err) {
-      printf("[DEBUG] Infix Validation Failed, Error: %s\n", number_to_message[j].error);
-      exit(err);
-    }
-  }
-}
-
 char *convert_to_infix(char *postfixString) {
   int success = validate_postfix(postfixString);
   if (success != 0) {
-    exit_and_print_error(success);
+    exit_print_error(success);
   };
 
   node *operand1;

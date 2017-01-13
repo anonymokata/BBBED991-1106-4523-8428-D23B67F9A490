@@ -2,6 +2,8 @@
 #define ERROR_MESSAGES_H
 
 
+void exit_print_error(int);
+
 typedef struct {
 	int num;
 	char *error;

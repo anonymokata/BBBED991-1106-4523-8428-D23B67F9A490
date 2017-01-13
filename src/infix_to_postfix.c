@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "validate_infix.h"
+#include "error_messages.h"
 
 char *postfixArray;
 char *stack;
@@ -55,8 +56,12 @@ void build_postfix(char element) {
   }
 }
 
+
 char *convert_to_postfix(char *infixString) {
-  validate_infix(infixString);
+  int success = validate_infix(infixString);
+  if (success != 0) {
+    exit_print_error(success);
+  }
 
   postfixArray = malloc(sizeof(char) * strlen(infixString));
   stack = malloc(sizeof(char) * strlen(infixString));
