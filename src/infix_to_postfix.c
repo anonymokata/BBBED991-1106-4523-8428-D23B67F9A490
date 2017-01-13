@@ -8,9 +8,9 @@
 char *postfixArray;
 char *stack;
 
-int postfixArrayPosition = 0;
-int stackPosition = 0;
-int infixStringPosition = 0;
+static int postfixArrayPosition = 0;
+static int stackPosition = 0;
+static int infixStringPosition = 0;
 
 int get_precedence(char element) {
   switch (element) {

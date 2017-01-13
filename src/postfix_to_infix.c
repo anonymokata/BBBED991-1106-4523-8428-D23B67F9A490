@@ -13,22 +13,21 @@ struct node {
 } *stack;
 
 typedef struct node node;
-int stackIndex = 0;
 char *array;
 int indexLocation = 0;
 node *firstMostNode;
 node *lastMostNode;
 node *link;
 
-void push_to_stack(node *link) {
-  stack[stackIndex] = *link;
-  stackIndex++;
+void push_to_stack(node *link, int index) {
+  stack[index] = *link;
+  index++;
 }
 
-node *pop() {
+node *pop(int index) {
   node *lastLink;
-  lastLink = &stack[stackIndex - 1];
-  stackIndex--;
+  lastLink = &stack[index - 1];
+  index--;
   return lastLink;
 }
 
@@ -96,6 +95,8 @@ node *add_parenthesis(node *link) {
 }
 
 char *convert_to_infix(char *postfixString) {
+  static int stackIndex = 0;
+
   int success = validate_postfix(postfixString);
   if (success != 0) {
     exit_print_error(success);
@@ -109,10 +110,10 @@ char *convert_to_infix(char *postfixString) {
     char currentElement = postfixString[position];
 
     if (isalnum(currentElement)) {
-      push_to_stack(create_link(currentElement));
+      push_to_stack(create_link(currentElement), stackIndex);
     } else {
-      operand1 = pop();
-      operand2 = pop();
+      operand1 = pop(stackIndex);
+      operand2 = pop(stackIndex);
 
       set_first_node(operand1);
       set_last_node(operand2);
@@ -122,11 +123,11 @@ char *convert_to_infix(char *postfixString) {
       prepend_to_list(link);
       append_to_list(link);
 
-      push_to_stack(add_parenthesis(link));
+      push_to_stack(add_parenthesis(link), stackIndex);
     }
     position++;
   }
-  set_first_node(pop());
+  set_first_node(pop(stackIndex));
   char *stringArray = get_string(firstMostNode, sizeof(postfixString));
   free(operand1);
   free(operand2);
