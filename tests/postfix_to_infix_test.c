@@ -91,7 +91,7 @@ Suite *postfix_to_infix_suite(void) {
   tcase_add_test(tc_convert_to_infix, should_convert_postfix_expression_with_exponents_operators);
   tcase_add_test(tc_convert_to_infix, should_convert_postfix_expression_with_respect_to_precedence);
   tcase_add_test(tc_convert_to_infix, should_convert_postfix_expression_with_multiple_operators_and_operands);
-  tcase_add_exit_test(tc_convert_to_infix, should_exit_with_status_1_if_postfix_validation_fails, 1);
+  tcase_add_exit_test(tc_convert_to_infix, should_exit_with_status_1_if_postfix_validation_fails, 24);
 
   suite_add_tcase(s, tc_convert_to_infix);
 

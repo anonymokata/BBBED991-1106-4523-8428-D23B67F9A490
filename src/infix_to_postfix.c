@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "validate_infix.h"
+#include "error_messages.h"
 
 char *postfixArray;
 char *stack;
@@ -56,6 +57,7 @@ void build_postfix(char element) {
 }
 
 void dump_partial_stack() {
+  infixStringPosition++;
   while (stack[stackPosition - 1] != '(') {
     push(postfixArrayPosition, stack[stackPosition - 1]);
     stackPosition--;
@@ -67,8 +69,14 @@ void set_max_array_size(int length) {
   postfixArray = malloc(sizeof(char) * length);
   stack = malloc(sizeof(char) * length);
 }
+
 const char *convert_to_postfix(char *infixString) {
-  validate_infix(infixString);
+
+  int success = validate_infix(infixString);
+
+  if (success != 0) {
+    exit_print_error(success);
+  }
   set_max_array_size(strlen(infixString));
 
   while (infixString[infixStringPosition] != '\0') {
@@ -76,7 +84,6 @@ const char *convert_to_postfix(char *infixString) {
       push_stack(infixString[infixStringPosition]);
       infixStringPosition++;
     } else if (infixString[infixStringPosition] == ')') {
-      infixStringPosition++;
       dump_partial_stack();
     } else {
       build_postfix(infixString[infixStringPosition]);

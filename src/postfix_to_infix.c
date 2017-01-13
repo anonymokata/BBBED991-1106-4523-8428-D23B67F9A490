@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include "validate_postfix.h"
+#include "error_messages.h"
 
 struct node {
   char element;
@@ -44,16 +45,16 @@ void set_first_node(node *link) {
   }
 }
 
-char *recurse_list(node *chain, char *elementString, int indexLocation) {
+char *recurse_list(node *chain, int index, char *finalArray) {
   if (chain -> next) {
-    elementString[indexLocation] = chain -> element;
-    indexLocation++;
-    recurse_list(chain -> next, elementString, indexLocation);
+    finalArray[index] = chain -> element;
+    index++;
+    recurse_list(chain -> next, index, finalArray);
   } else {
-    elementString[indexLocation] = chain -> element;
-    elementString[indexLocation + 1] = '\0';
+    finalArray[index] = chain -> element;
+    finalArray[index + 1] = '\0';
   }
-  return elementString;
+  return finalArray;
 }
 
 node *create_link(char value) {
@@ -64,9 +65,9 @@ node *create_link(char value) {
   return link;
 }
 
-char *get_string(node *chain, int arraySize) {
-  char *emptyArray = malloc(arraySize *sizeof(char));
-  return recurse_list(chain, emptyArray, 0);
+char *get_string(node *chain, int arraySize, int index) {
+  char array;
+  return recurse_list(chain, index, &array);
 }
 
 void prepend_to_list(node *link) {
@@ -91,11 +92,16 @@ node *add_parenthesis(node *link) {
   return firstMostNode;
 }
 
-const char *convert_to_infix(char *postfixString) {
-  validate_postfix(postfixString);
+char *convert_to_infix(char *postfixString) {
+
+  int success = validate_postfix(postfixString);
+  if (success != 0) {
+    exit_print_error(success);
+  };
 
   node *operand1;
   node *operand2;
+  int indexLocation = 0;
   int position = 0;
   int stackIndex = 0;
 
@@ -121,8 +127,8 @@ const char *convert_to_infix(char *postfixString) {
     position++;
   }
   set_first_node(pop(stackIndex));
-  char *infixArray = get_string(firstMostNode, sizeof(postfixString));
+  char *stringArray = get_string(firstMostNode, sizeof(postfixString), indexLocation);
   free(operand1);
   free(operand2);
-  return infixArray;
+  return stringArray;
 };

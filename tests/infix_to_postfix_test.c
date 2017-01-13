@@ -106,7 +106,7 @@ Suite *infix_to_postfix_suite(void) {
   tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_multiple_operands_with_different_precedence);
   tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_respect_to_parenthesis);
   tcase_add_test(tc_convert_to_postfix, should_convert_infix_with_multiple_parenthesis_and_operators);
-  tcase_add_exit_test(tc_convert_to_postfix, should_exit_with_status_1_upon_failure_of_validation, 1);
+  tcase_add_exit_test(tc_convert_to_postfix, should_exit_with_status_1_upon_failure_of_validation, 23);
 
   suite_add_tcase(s, tc_convert_to_postfix);
 

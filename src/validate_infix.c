@@ -11,18 +11,18 @@ int validate_operator_or_operand(char *infixArray, int index) {
   if (!isalnum(currentElement)) {
     arrayLength++;
     if (infixArray[index - 1] == '(' || infixArray[index + 1] == ')') {
-      exit(EXIT_FAILURE);
+      return 23;
     };
   } else {
     arrayLength++;
     if (infixArray[index - 1] == ')' || infixArray[index + 1] == '(') {
-      exit(EXIT_FAILURE);
+      return 23;
     };
   }
   return 0;
 }
 
-void validate_infix(char *infixArray) {
+int validate_infix(char *infixArray) {
   int counter = 0;
 
   for (int index = 0; index < strlen(infixArray); index++) {
@@ -31,24 +31,24 @@ void validate_infix(char *infixArray) {
     switch (currentElement) {
     case '(':
       if (infixArray[index + 1] == ')') {
-        exit(EXIT_FAILURE);
+        return 20;
       };
       counter++;
       break;
     case ')':
       if (counter <= 0) {
-        exit(EXIT_FAILURE);
+        return 21;
       };
       counter--;
       break;
     default:
-      if (validate_operator_or_operand(infixArray, index) == 1) {
-        exit(EXIT_FAILURE);
+      if (validate_operator_or_operand(infixArray, index) != 0) {
+        return 23;
       };
     }
   }
   if (arrayLength < 3 || counter != 0) {
-    exit(EXIT_FAILURE);
+    return 22;
   }
-  exit(0);
+  exit(EXIT_SUCCESS);
 }
