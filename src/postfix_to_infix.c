@@ -13,8 +13,7 @@ struct node {
 } *stack;
 
 typedef struct node node;
-char *array;
-int indexLocation = 0;
+
 node *firstMostNode;
 node *lastMostNode;
 node *link;
@@ -47,16 +46,16 @@ void set_first_node(node *link) {
   }
 }
 
-char *recurse_list(node *chain) {
+char *recurse_list(node *chain, int index, char *finalArray) {
   if (chain -> next) {
-    array[indexLocation] = chain -> element;
-    indexLocation++;
-    recurse_list(chain -> next);
+    finalArray[index] = chain -> element;
+    index++;
+    recurse_list(chain -> next, index, finalArray);
   } else {
-    array[indexLocation] = chain -> element;
-    array[indexLocation + 1] = '\0';
+    finalArray[index] = chain -> element;
+    finalArray[index + 1] = '\0';
   }
-  return array;
+  return finalArray;
 }
 
 node *create_link(char value) {
@@ -67,9 +66,9 @@ node *create_link(char value) {
   return link;
 }
 
-char *get_string(node *chain, int arraySize) {
-  array = malloc(arraySize *sizeof(char));
-  return recurse_list(chain);
+char *get_string(node *chain, int arraySize, int index) {
+  char array;
+  return recurse_list(chain, index, &array);
 }
 
 void prepend_to_list(node *link) {
@@ -95,7 +94,8 @@ node *add_parenthesis(node *link) {
 }
 
 char *convert_to_infix(char *postfixString) {
-  static int stackIndex = 0;
+  int stackIndex = 0;
+  int indexLocation = 0;
 
   int success = validate_postfix(postfixString);
   if (success != 0) {
@@ -128,7 +128,7 @@ char *convert_to_infix(char *postfixString) {
     position++;
   }
   set_first_node(pop(stackIndex));
-  char *stringArray = get_string(firstMostNode, sizeof(postfixString));
+  char *stringArray = get_string(firstMostNode, sizeof(postfixString), indexLocation);
   free(operand1);
   free(operand2);
   return stringArray;
